@@ -1,0 +1,45 @@
+// Baseline, measured in pixels
+// The value should be the same as the font-size value for the html element
+// If the html element's font-size is set to 62.5% (of the browser's default font-size of 16px),
+// then the variable below would be 10px.
+$baseline_px: 10px;
+
+@mixin rem($property, $px_values) {
+
+	// Convert the baseline into rems
+	$baseline_rem: ($baseline_px / 1rem);
+
+	// Print the first line in pixel values
+	#{$property}: $px_values;
+
+	// If there is only one (numeric) value, return the property/value line for it.
+	@if type-of($px_values) == 'number' {
+		#{$property}: $px_values / $baseline_rem;
+	}
+
+	// If there is more than one value, create a list and perform equations on each value
+	@else {
+
+		// Create an empty list that we can dump values into
+		$rem_values: ();
+
+		@each $value in $px_values {
+
+			// If the value is zero, return 0
+			@if $value == 0 { 
+				$rem_values: append($rem_values, $value); 
+			}
+
+			// If the value is not zero, convert it from px to rem
+			@else {
+				$rem_values: append($rem_values, ($value / $baseline_rem) );
+			}
+
+		}
+
+		// Return the property and its list of converted values
+		#{$property}: $rem_values;
+
+	}
+
+}

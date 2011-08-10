@@ -1,5 +1,5 @@
 rem() is a Sass mixin that converts pixel values to rem values for whatever property is passed to it.
-It returns two lines of code — one of the regular pixel values (for IE), and another with the
+It returns two lines of code — one of the regular pixel values (for some older browsers), and another with the
 converted rem values (for everyone else). Special thanks to Chris Epstein (http://chriseppstein.github.com)
 and Martin Bavio (http://martinbavio.com) for the help and code!
 

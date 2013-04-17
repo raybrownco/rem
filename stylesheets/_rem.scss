@@ -6,7 +6,7 @@ $baseline-px: 10px;
 
 @mixin rem($property, $px-values) {
   // Convert the baseline into rems
-  $baseline-rem: $baseline-px / 1rem;
+  $baseline-rem: $baseline-px / 1rem * 1rem;
   // Print the first line in pixel values
   #{$property}: $px-values;
   // If there is only one (numeric) value, return the property/value line for it.

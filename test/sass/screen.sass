@@ -1,10 +1,13 @@
-@import "../../stylesheets/rem"
+@import "../../stylesheets/rem.sass"
 
 .foo
-  +rem(font-size, 16px)
+	+rem(font-size, 16px)
 
 .bar
-  +rem(margin, 15px 0 15px 0)
+	+rem(margin, 15px 0 15px 0)
 
 .baz
-  +rem(border, 3px solid #f00)
+	+rem(border, 3px solid #f00)
+
+.qux
+	+rem(background-position, 4px 1px, 4px 0px, 50% 0px)

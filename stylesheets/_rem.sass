@@ -4,29 +4,45 @@
 // then the variable below would be 10px.
 $baseline-px: 10px
 
-=rem($property, $px-values)
-  // Convert the baseline into rems
-  $baseline-rem: $baseline-px / 1rem
-  
-  // Print the first line in pixel values
-  #{$property}: $px-values
-  
-  // If there is only one (numeric) value, return the property/value line for it.
-  @if type-of($px-values) == "number"
-    #{$property}: $px-values / $baseline-rem
-  @else
+// Function to return a rem value given a px value
+@function get_rem($val)
+    // Convert the baseline into rems
+    $baseline-rem: $baseline-px / 1rem * 1
+    @if $val == 0px or type-of( $val ) != "number"
+        @return $val
+    @else
+        @return $val / $baseline-rem
 
-    // Create an empty list that we can dump values into
+=rem($property, $params...)
+
+    // Print the first line in pixel values
+    #{$property}: $params
+    
+    // Create a primary list that we can dump values into
     $rem-values: ()
+    // For each parameter given
+    @each $param in $params
+        // If the parameter is a list then loop
+        // each list's item
+        @if type-of($param) == "list"
+            $list-values: ()
+            @each $item in $param
+                @if type-of($item) == "number" and unit($item) == px
+                    // If list's item is a number in px (e.g 50px)
+                    // append the equivalent rem to the list
+                    $list-values: append($list-values, get_rem($item))
+                @else
+                    // else append the item without modifying it.
+                    $list-values: append($list-values, $item)
+            // Finally append the list-values to the primary list ussing commas
+            $rem-values: append($rem-values, $list-values, comma)
 
-    @each $value in $px-values
-      
-      // If the value is zero or not a number, return it
-      @if $value == 0 or type-of( $value ) != "number"
-        $rem-values: append($rem-values, $value)
-
-      @else
-        $rem-values: append($rem-values, $value / $baseline-rem)
-
+        @else if type-of($param) == "number" and unit($param) == px
+            // If param is not list and its a number in px
+            // Append it to the primary list
+            $rem-values: append($rem-values, get_rem($param))
+        @else
+            // else just put the param in list without modifying it.
+            $rem-values: append($rem-values, $param)
     // Return the property and its list of converted values
     #{$property}: $rem-values

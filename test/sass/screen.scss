@@ -1,0 +1,17 @@
+@import "../../stylesheets/rem.scss";
+
+.foo {
+	@include rem(font-size, 16px);
+}
+
+.bar {
+	@include rem(margin, 15px 0 15px 0);
+}
+
+.baz {
+	@include rem(border, 3px solid #f00);
+}
+
+.qux {
+	@include rem(background-position, 4px 1px, 4px 0px, 50% 0px);
+}

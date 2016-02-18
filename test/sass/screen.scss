@@ -13,5 +13,5 @@
 }
 
 .qux {
-	@include rem(background-position, 4px 1px, 4px 0px, 50% 0px);
+	@include rem(background-position, 4px 1px, 4px 0, 50% 0);
 }

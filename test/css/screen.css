@@ -11,5 +11,7 @@
   border: 0.3rem solid #f00; }
 
 .qux {
-  background-position: 4px 1px, 4px 0px, 50% 0px;
-  background-position: 0.4rem 0.1rem, 0.4rem 0px, 50% 0px; }
+  background-position: 4px 1px, 4px 0, 50% 0;
+  background-position: 0.4rem 0.1rem, 0.4rem 0, 50% 0; }
+
+/*# sourceMappingURL=screen.css.map */

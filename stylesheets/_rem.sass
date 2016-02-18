@@ -5,13 +5,16 @@
 $baseline-px: 10px
 
 // Function to return a rem value given a px value
+// If the value passed is not a number in px then just returns the value
 @function get_rem($val)
     // Convert the baseline into rems
     $baseline-rem: $baseline-px / 1rem * 1
-    @if $val == 0px or type-of( $val ) != "number"
-        @return $val
-    @else
+    @if type-of($val) == "number" and unit($val) == px
+        // If item is a number in px then return the conversion to rem
         @return $val / $baseline-rem
+    @else
+        // Else just return the item
+        @return $val
 
 =rem($property, $params...)
 
@@ -27,22 +30,12 @@ $baseline-px: 10px
         @if type-of($param) == "list"
             $list-values: ()
             @each $item in $param
-                @if type-of($item) == "number" and unit($item) == px
-                    // If list's item is a number in px (e.g 50px)
-                    // append the equivalent rem to the list
-                    $list-values: append($list-values, get_rem($item))
-                @else
-                    // else append the item without modifying it.
-                    $list-values: append($list-values, $item)
+                // Append item to list using get_rem()
+                $list-values: append($list-values, get_rem($item))
             // Finally append the list-values to the primary list ussing commas
             $rem-values: append($rem-values, $list-values, comma)
 
-        @else if type-of($param) == "number" and unit($param) == px
-            // If param is not list and its a number in px
-            // Append it to the primary list
-            $rem-values: append($rem-values, get_rem($param))
         @else
-            // else just put the param in list without modifying it.
-            $rem-values: append($rem-values, $param)
+            $rem-values: append($rem-values, get_rem($param))
     // Return the property and its list of converted values
     #{$property}: $rem-values
